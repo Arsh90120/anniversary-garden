@@ -16,6 +16,7 @@
       justify-content: center;
       font-family: 'Georgia', serif;
       overflow: hidden;
+      padding: 0 16px;
     }
 
     .message {
@@ -23,29 +24,30 @@
       margin-bottom: 40px;
       animation: fadeIn 2s ease forwards;
       opacity: 0;
+      width: 100%;
     }
 
     .message h1 {
-      font-size: 2.2rem;
+      font-size: clamp(1.4rem, 5vw, 2.2rem);
       color: #b5451b;
       letter-spacing: 1px;
     }
 
     .message p {
-      font-size: 1.1rem;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
       color: #7b4f3a;
       margin-top: 8px;
     }
 
     .years {
-      font-size: 1.3rem;
+      font-size: clamp(1rem, 3.5vw, 1.3rem);
       color: #c0392b;
       margin-top: 6px;
       font-style: italic;
     }
 
     .counter {
-      font-size: 0.95rem;
+      font-size: clamp(0.78rem, 2.5vw, 0.95rem);
       color: #a0522d;
       margin-top: 8px;
       letter-spacing: 0.3px;
@@ -53,8 +55,8 @@
 
     .garden {
       position: relative;
-      width: 420px;
-      height: 420px;
+      width: min(420px, 90vw);
+      height: min(420px, 90vw);
     }
 
     .stem {
@@ -74,8 +76,7 @@
 
     .leaf {
       position: absolute;
-      width: 45px;
-      height: 22px;
+      width: 45px; height: 22px;
       background: #66bb6a;
       border-radius: 50% 0 50% 0;
       opacity: 0;
@@ -185,43 +186,37 @@
       font-size: 0.85rem; color: #9e6b5a; font-style: italic;
       animation: fadeIn 2s ease forwards;
       animation-delay: 4.5s; opacity: 0;
+      text-align: center;
     }
 
-    /* Typewriter message */
+    /* Typewriter — JS-driven, wraps naturally on mobile */
     .typewriter-wrap {
       margin-top: 22px;
       text-align: center;
-      min-height: 2.2rem;
+      width: 100%;
+      padding: 0 8px;
     }
 
     .typewriter {
-      font-size: 1.05rem;
+      font-size: clamp(0.9rem, 3vw, 1.05rem);
       color: #b5451b;
       font-style: italic;
-      border-right: 2px solid #b5451b;
-      white-space: nowrap;
-      overflow: hidden;
+      display: inline;
+      word-break: break-word;
+    }
+
+    .cursor {
       display: inline-block;
-      max-width: 0;
-      opacity: 0;
-    }
-
-    .typewriter.active {
-      opacity: 1;
-      animation: typing 3s steps(60, end) forwards, blink 0.75s step-end infinite;
-    }
-
-    .typewriter.done {
-      border-right: none;
-    }
-
-    @keyframes typing {
-      from { max-width: 0; }
-      to   { max-width: 600px; }
+      width: 2px;
+      height: 1.1em;
+      background: #b5451b;
+      margin-left: 2px;
+      vertical-align: middle;
+      animation: blink 0.75s step-end infinite;
     }
 
     @keyframes blink {
-      50% { border-color: transparent; }
+      50% { opacity: 0; }
     }
   </style>
 </head>
@@ -253,10 +248,10 @@
   </div>
 
   <div class="typewriter-wrap">
-    <span class="typewriter" id="typewriter">Thank you for being the best parents — love, Arshay 🤍</span>
+    <span class="typewriter" id="typewriter"></span><span class="cursor" id="cursor" style="display:none"></span>
   </div>
 
-  <p class="footer-note">Hover each petal ✨ &nbsp;— with love, Arshay</p>
+  <p class="footer-note">Tap a petal ✨ &nbsp;— with love, Arshay</p>
 
   <div class="tooltip" id="tooltip"></div>
 
@@ -265,25 +260,34 @@
     function updateCounter() {
       const start = new Date('2007-05-28T00:00:00');
       const now = new Date();
-      const diffMs = now - start;
-      const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      const hours = now.getHours();
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const totalDays = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+      const h = now.getHours();
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
       document.getElementById('counter').textContent =
-        `Together for ${totalDays.toLocaleString()} days — ${hours}:${minutes}:${seconds} and counting 💛`;
+        `Together for ${totalDays.toLocaleString()} days — ${h}:${m}:${s} and counting 💛`;
     }
     updateCounter();
     setInterval(updateCounter, 1000);
 
-    // --- Typewriter: starts after flower fully blooms (~4.5s) ---
+    // --- JS typewriter (no white-space:nowrap, wraps on mobile) ---
+    const fullText = 'Thank you for being the best parents — love, Arshay 🤍';
     setTimeout(() => {
       const tw = document.getElementById('typewriter');
-      tw.classList.add('active');
-      setTimeout(() => tw.classList.add('done'), 3200);
+      const cur = document.getElementById('cursor');
+      cur.style.display = 'inline-block';
+      let i = 0;
+      const interval = setInterval(() => {
+        tw.textContent += fullText[i];
+        i++;
+        if (i >= fullText.length) {
+          clearInterval(interval);
+          setTimeout(() => { cur.style.display = 'none'; }, 1200);
+        }
+      }, 50);
     }, 4800);
 
-    // --- Confetti burst on load ---
+    // --- Confetti ---
     const colors = ['#f48fb1','#f06292','#ec407a','#fff176','#a5d6a7','#90caf9','#ce93d8','#ffcc80'];
     function launchConfetti() {
       for (let i = 0; i < 120; i++) {
@@ -302,7 +306,7 @@
     }
     window.addEventListener('load', launchConfetti);
 
-    // --- Tooltip ---
+    // --- Tooltip (tap support for mobile) ---
     const petals = document.querySelectorAll('.petal');
     const tooltip = document.getElementById('tooltip');
     petals.forEach(petal => {
@@ -311,6 +315,14 @@
         tooltip.style.opacity = '1';
         tooltip.style.left = (e.clientX + 14) + 'px';
         tooltip.style.top  = (e.clientY - 36) + 'px';
+      });
+      petal.addEventListener('touchstart', (e) => {
+        const t = e.touches[0];
+        tooltip.textContent = petal.dataset.tip;
+        tooltip.style.opacity = '1';
+        tooltip.style.left = (t.clientX + 14) + 'px';
+        tooltip.style.top  = (t.clientY - 36) + 'px';
+        setTimeout(() => { tooltip.style.opacity = '0'; }, 2000);
       });
       petal.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; });
     });
