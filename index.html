@@ -51,14 +51,12 @@
       letter-spacing: 0.3px;
     }
 
-    /* Garden container */
     .garden {
       position: relative;
       width: 420px;
       height: 420px;
     }
 
-    /* Stem */
     .stem {
       position: absolute;
       bottom: 10px;
@@ -72,11 +70,8 @@
       animation-delay: 0.5s;
     }
 
-    @keyframes growStem {
-      to { height: 180px; }
-    }
+    @keyframes growStem { to { height: 180px; } }
 
-    /* Leaves */
     .leaf {
       position: absolute;
       width: 45px;
@@ -87,90 +82,62 @@
       animation: leafIn 0.6s ease forwards;
     }
 
-    .leaf.left {
-      bottom: 110px;
-      left: calc(50% - 48px);
-      transform: rotate(-30deg);
-      animation-delay: 1.8s;
-    }
+    .leaf.left  { bottom: 110px; left: calc(50% - 48px); transform: rotate(-30deg); animation-delay: 1.8s; }
+    .leaf.right { bottom: 140px; left: calc(50% + 5px);  transform: rotate(30deg) scaleX(-1); animation-delay: 2s; }
 
-    .leaf.right {
-      bottom: 140px;
-      left: calc(50% + 5px);
-      transform: rotate(30deg) scaleX(-1);
-      animation-delay: 2s;
-    }
+    @keyframes leafIn { to { opacity: 1; } }
 
-    @keyframes leafIn {
-      to { opacity: 1; }
-    }
-
-    /* Flower center */
     .flower-center {
       position: absolute;
-      width: 60px;
-      height: 60px;
+      width: 60px; height: 60px;
       background: radial-gradient(circle, #fff176, #f9a825);
       border-radius: 50%;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -65%);
-      z-index: 10;
-      opacity: 0;
+      z-index: 10; opacity: 0;
       animation: fadeIn 0.5s ease forwards;
       animation-delay: 2.2s;
       box-shadow: 0 0 12px rgba(249,168,37,0.5);
     }
 
-    /* Petals */
     .petal-wrap {
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -65%);
-      width: 60px;
-      height: 60px;
+      width: 60px; height: 60px;
     }
 
     .petal {
       position: absolute;
-      width: 54px;
-      height: 90px;
+      width: 54px; height: 90px;
       border-radius: 50% 50% 30% 30%;
-      top: -85px;
-      left: 50%;
+      top: -85px; left: 50%;
       transform-origin: bottom center;
       transform: translateX(-50%) rotate(0deg);
-      opacity: 0;
-      cursor: pointer;
+      opacity: 0; cursor: pointer;
       transition: filter 0.2s;
     }
 
     .petal:hover { filter: brightness(1.15); }
 
-    .petal:nth-child(1)  { background: #f48fb1; animation: petalBloom 0.5s ease forwards; animation-delay: 2.4s; transform: translateX(-50%) rotate(0deg); }
-    .petal:nth-child(2)  { background: #f06292; animation: petalBloom 0.5s ease forwards; animation-delay: 2.6s; transform: translateX(-50%) rotate(45deg); }
-    .petal:nth-child(3)  { background: #ec407a; animation: petalBloom 0.5s ease forwards; animation-delay: 2.8s; transform: translateX(-50%) rotate(90deg); }
-    .petal:nth-child(4)  { background: #f48fb1; animation: petalBloom 0.5s ease forwards; animation-delay: 3.0s; transform: translateX(-50%) rotate(135deg); }
-    .petal:nth-child(5)  { background: #f06292; animation: petalBloom 0.5s ease forwards; animation-delay: 3.2s; transform: translateX(-50%) rotate(180deg); }
-    .petal:nth-child(6)  { background: #ec407a; animation: petalBloom 0.5s ease forwards; animation-delay: 3.4s; transform: translateX(-50%) rotate(225deg); }
-    .petal:nth-child(7)  { background: #f48fb1; animation: petalBloom 0.5s ease forwards; animation-delay: 3.6s; transform: translateX(-50%) rotate(270deg); }
-    .petal:nth-child(8)  { background: #f06292; animation: petalBloom 0.5s ease forwards; animation-delay: 3.8s; transform: translateX(-50%) rotate(315deg); }
+    .petal:nth-child(1) { background:#f48fb1; animation:petalBloom 0.5s ease forwards; animation-delay:2.4s; transform:translateX(-50%) rotate(0deg); }
+    .petal:nth-child(2) { background:#f06292; animation:petalBloom 0.5s ease forwards; animation-delay:2.6s; transform:translateX(-50%) rotate(45deg); }
+    .petal:nth-child(3) { background:#ec407a; animation:petalBloom 0.5s ease forwards; animation-delay:2.8s; transform:translateX(-50%) rotate(90deg); }
+    .petal:nth-child(4) { background:#f48fb1; animation:petalBloom 0.5s ease forwards; animation-delay:3.0s; transform:translateX(-50%) rotate(135deg); }
+    .petal:nth-child(5) { background:#f06292; animation:petalBloom 0.5s ease forwards; animation-delay:3.2s; transform:translateX(-50%) rotate(180deg); }
+    .petal:nth-child(6) { background:#ec407a; animation:petalBloom 0.5s ease forwards; animation-delay:3.4s; transform:translateX(-50%) rotate(225deg); }
+    .petal:nth-child(7) { background:#f48fb1; animation:petalBloom 0.5s ease forwards; animation-delay:3.6s; transform:translateX(-50%) rotate(270deg); }
+    .petal:nth-child(8) { background:#f06292; animation:petalBloom 0.5s ease forwards; animation-delay:3.8s; transform:translateX(-50%) rotate(315deg); }
 
     @keyframes petalBloom {
-      0%   { opacity: 0; transform: translateX(-50%) rotate(var(--r, 0deg)) scaleY(0); }
-      100% { opacity: 1; }
+      0%   { opacity:0; transform:translateX(-50%) rotate(var(--r,0deg)) scaleY(0); }
+      100% { opacity:1; }
     }
 
     .petal-label {
       position: absolute;
-      font-size: 0.62rem;
-      color: #fff;
-      font-weight: bold;
-      text-align: center;
-      width: 54px;
-      top: 18px;
-      left: 0;
+      font-size: 0.62rem; color: #fff; font-weight: bold;
+      text-align: center; width: 54px; top: 18px; left: 0;
       pointer-events: none;
       text-shadow: 0 1px 2px rgba(0,0,0,0.25);
       letter-spacing: 0.3px;
@@ -178,29 +145,19 @@
 
     .tooltip {
       position: fixed;
-      background: rgba(255,255,255,0.95);
-      color: #7b4f3a;
-      border: 1px solid #f48fb1;
-      border-radius: 10px;
-      padding: 8px 14px;
-      font-size: 0.88rem;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.2s;
-      z-index: 100;
-      max-width: 180px;
-      text-align: center;
+      background: rgba(255,255,255,0.95); color: #7b4f3a;
+      border: 1px solid #f48fb1; border-radius: 10px;
+      padding: 8px 14px; font-size: 0.88rem;
+      pointer-events: none; opacity: 0;
+      transition: opacity 0.2s; z-index: 100;
+      max-width: 180px; text-align: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .floating-petal {
-      position: fixed;
-      width: 12px;
-      height: 18px;
-      background: #f48fb1;
-      border-radius: 50% 50% 30% 30%;
-      opacity: 0.5;
-      animation: floatDown linear infinite;
+      position: fixed; width: 12px; height: 18px;
+      background: #f48fb1; border-radius: 50% 50% 30% 30%;
+      opacity: 0.5; animation: floatDown linear infinite;
       pointer-events: none;
     }
 
@@ -209,14 +166,9 @@
       100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Confetti piece */
     .confetti-piece {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      top: -10px;
-      border-radius: 2px;
-      pointer-events: none;
+      position: fixed; width: 10px; height: 10px;
+      top: -10px; border-radius: 2px; pointer-events: none;
       animation: confettiFall linear forwards;
     }
 
@@ -226,18 +178,50 @@
       100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
     }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
+    @keyframes fadeIn { to { opacity: 1; } }
 
     .footer-note {
       margin-top: 30px;
-      font-size: 0.85rem;
-      color: #9e6b5a;
-      font-style: italic;
+      font-size: 0.85rem; color: #9e6b5a; font-style: italic;
       animation: fadeIn 2s ease forwards;
-      animation-delay: 4.5s;
+      animation-delay: 4.5s; opacity: 0;
+    }
+
+    /* Typewriter message */
+    .typewriter-wrap {
+      margin-top: 22px;
+      text-align: center;
+      min-height: 2.2rem;
+    }
+
+    .typewriter {
+      font-size: 1.05rem;
+      color: #b5451b;
+      font-style: italic;
+      border-right: 2px solid #b5451b;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      max-width: 0;
       opacity: 0;
+    }
+
+    .typewriter.active {
+      opacity: 1;
+      animation: typing 3s steps(60, end) forwards, blink 0.75s step-end infinite;
+    }
+
+    .typewriter.done {
+      border-right: none;
+    }
+
+    @keyframes typing {
+      from { max-width: 0; }
+      to   { max-width: 600px; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
   </style>
 </head>
@@ -256,32 +240,20 @@
     <div class="leaf right"></div>
 
     <div class="petal-wrap" id="flowerWrap">
-      <div class="petal" data-tip="A love that grows stronger every season">
-        <span class="petal-label">Love</span>
-      </div>
-      <div class="petal" data-tip="Laughter fills every room you share">
-        <span class="petal-label">Laughter</span>
-      </div>
-      <div class="petal" data-tip="A family rooted in warmth and care">
-        <span class="petal-label">Family</span>
-      </div>
-      <div class="petal" data-tip="Through every storm, you stood together">
-        <span class="petal-label">Strength</span>
-      </div>
-      <div class="petal" data-tip="Trust built leaf by leaf, year by year">
-        <span class="petal-label">Trust</span>
-      </div>
-      <div class="petal" data-tip="Home is wherever you both are">
-        <span class="petal-label">Home</span>
-      </div>
-      <div class="petal" data-tip="Kindness woven into every small moment">
-        <span class="petal-label">Kindness</span>
-      </div>
-      <div class="petal" data-tip="Growing together, always">
-        <span class="petal-label">Growth</span>
-      </div>
+      <div class="petal" data-tip="A love that grows stronger every season"><span class="petal-label">Love</span></div>
+      <div class="petal" data-tip="Laughter fills every room you share"><span class="petal-label">Laughter</span></div>
+      <div class="petal" data-tip="A family rooted in warmth and care"><span class="petal-label">Family</span></div>
+      <div class="petal" data-tip="Through every storm, you stood together"><span class="petal-label">Strength</span></div>
+      <div class="petal" data-tip="Trust built leaf by leaf, year by year"><span class="petal-label">Trust</span></div>
+      <div class="petal" data-tip="Home is wherever you both are"><span class="petal-label">Home</span></div>
+      <div class="petal" data-tip="Kindness woven into every small moment"><span class="petal-label">Kindness</span></div>
+      <div class="petal" data-tip="Growing together, always"><span class="petal-label">Growth</span></div>
       <div class="flower-center"></div>
     </div>
+  </div>
+
+  <div class="typewriter-wrap">
+    <span class="typewriter" id="typewriter">Thank you for being the best parents — love, Arshay 🤍</span>
   </div>
 
   <p class="footer-note">Hover each petal ✨ &nbsp;— with love, Arshay</p>
@@ -295,8 +267,6 @@
       const now = new Date();
       const diffMs = now - start;
       const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-      const years = Math.floor(totalDays / 365.25);
-      const remainingDays = Math.floor(totalDays - years * 365.25);
       const hours = now.getHours();
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -306,19 +276,25 @@
     updateCounter();
     setInterval(updateCounter, 1000);
 
+    // --- Typewriter: starts after flower fully blooms (~4.5s) ---
+    setTimeout(() => {
+      const tw = document.getElementById('typewriter');
+      tw.classList.add('active');
+      setTimeout(() => tw.classList.add('done'), 3200);
+    }, 4800);
+
     // --- Confetti burst on load ---
     const colors = ['#f48fb1','#f06292','#ec407a','#fff176','#a5d6a7','#90caf9','#ce93d8','#ffcc80'];
     function launchConfetti() {
-      const count = 120;
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < 120; i++) {
         const el = document.createElement('div');
         el.className = 'confetti-piece';
         el.style.left = (Math.random() * 100) + 'vw';
         el.style.background = colors[Math.floor(Math.random() * colors.length)];
-        el.style.width = (6 + Math.random() * 8) + 'px';
+        el.style.width  = (6 + Math.random() * 8) + 'px';
         el.style.height = (6 + Math.random() * 8) + 'px';
         el.style.animationDuration = (2 + Math.random() * 3) + 's';
-        el.style.animationDelay = (Math.random() * 1.5) + 's';
+        el.style.animationDelay   = (Math.random() * 1.5) + 's';
         el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
         document.body.appendChild(el);
         setTimeout(() => el.remove(), 5000);
@@ -326,7 +302,7 @@
     }
     window.addEventListener('load', launchConfetti);
 
-    // --- Tooltip on petal hover ---
+    // --- Tooltip ---
     const petals = document.querySelectorAll('.petal');
     const tooltip = document.getElementById('tooltip');
     petals.forEach(petal => {
@@ -336,22 +312,19 @@
         tooltip.style.left = (e.clientX + 14) + 'px';
         tooltip.style.top  = (e.clientY - 36) + 'px';
       });
-      petal.addEventListener('mouseleave', () => {
-        tooltip.style.opacity = '0';
-      });
+      petal.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; });
     });
 
-    // --- Floating background petals ---
+    // --- Floating petals ---
     function spawnPetal() {
       const fp = document.createElement('div');
       fp.className = 'floating-petal';
       fp.style.left = Math.random() * 100 + 'vw';
       fp.style.animationDuration = (4 + Math.random() * 6) + 's';
-      fp.style.animationDelay = (Math.random() * 3) + 's';
-      fp.style.width = (8 + Math.random() * 10) + 'px';
+      fp.style.animationDelay   = (Math.random() * 3) + 's';
+      fp.style.width  = (8 + Math.random() * 10) + 'px';
       fp.style.height = (12 + Math.random() * 14) + 'px';
-      const hue = 330 + Math.random() * 30;
-      fp.style.background = `hsl(${hue}, 80%, 75%)`;
+      fp.style.background = `hsl(${330 + Math.random() * 30}, 80%, 75%)`;
       document.body.appendChild(fp);
       setTimeout(() => fp.remove(), 10000);
     }
