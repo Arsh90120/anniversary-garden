@@ -44,6 +44,13 @@
       font-style: italic;
     }
 
+    .counter {
+      font-size: 0.95rem;
+      color: #a0522d;
+      margin-top: 8px;
+      letter-spacing: 0.3px;
+    }
+
     /* Garden container */
     .garden {
       position: relative;
@@ -141,7 +148,6 @@
 
     .petal:hover { filter: brightness(1.15); }
 
-    /* 8 petals, evenly spaced */
     .petal:nth-child(1)  { background: #f48fb1; animation: petalBloom 0.5s ease forwards; animation-delay: 2.4s; transform: translateX(-50%) rotate(0deg); }
     .petal:nth-child(2)  { background: #f06292; animation: petalBloom 0.5s ease forwards; animation-delay: 2.6s; transform: translateX(-50%) rotate(45deg); }
     .petal:nth-child(3)  { background: #ec407a; animation: petalBloom 0.5s ease forwards; animation-delay: 2.8s; transform: translateX(-50%) rotate(90deg); }
@@ -156,7 +162,6 @@
       100% { opacity: 1; }
     }
 
-    /* Petal labels */
     .petal-label {
       position: absolute;
       font-size: 0.62rem;
@@ -171,7 +176,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* Tooltip */
     .tooltip {
       position: fixed;
       background: rgba(255,255,255,0.95);
@@ -189,7 +193,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    /* Floating petals background */
     .floating-petal {
       position: fixed;
       width: 12px;
@@ -204,6 +207,23 @@
     @keyframes floatDown {
       0%   { transform: translateY(-20px) rotate(0deg); opacity: 0.5; }
       100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Confetti piece */
+    .confetti-piece {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      border-radius: 2px;
+      pointer-events: none;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+      80%  { opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
     }
 
     @keyframes fadeIn {
@@ -227,6 +247,7 @@
     <h1>Happy 19th Anniversary</h1>
     <p>Nisha &amp; Shiva &nbsp;🌸&nbsp; May 28, 2007</p>
     <p class="years">19 years of love, laughter, and life together</p>
+    <p class="counter" id="counter">Loading...</p>
   </div>
 
   <div class="garden">
@@ -268,10 +289,46 @@
   <div class="tooltip" id="tooltip"></div>
 
   <script>
-    // Tooltip on petal hover
+    // --- Real-time counter ---
+    function updateCounter() {
+      const start = new Date('2007-05-28T00:00:00');
+      const now = new Date();
+      const diffMs = now - start;
+      const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const years = Math.floor(totalDays / 365.25);
+      const remainingDays = Math.floor(totalDays - years * 365.25);
+      const hours = now.getHours();
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('counter').textContent =
+        `Together for ${totalDays.toLocaleString()} days — ${hours}:${minutes}:${seconds} and counting 💛`;
+    }
+    updateCounter();
+    setInterval(updateCounter, 1000);
+
+    // --- Confetti burst on load ---
+    const colors = ['#f48fb1','#f06292','#ec407a','#fff176','#a5d6a7','#90caf9','#ce93d8','#ffcc80'];
+    function launchConfetti() {
+      const count = 120;
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('div');
+        el.className = 'confetti-piece';
+        el.style.left = (Math.random() * 100) + 'vw';
+        el.style.background = colors[Math.floor(Math.random() * colors.length)];
+        el.style.width = (6 + Math.random() * 8) + 'px';
+        el.style.height = (6 + Math.random() * 8) + 'px';
+        el.style.animationDuration = (2 + Math.random() * 3) + 's';
+        el.style.animationDelay = (Math.random() * 1.5) + 's';
+        el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        document.body.appendChild(el);
+        setTimeout(() => el.remove(), 5000);
+      }
+    }
+    window.addEventListener('load', launchConfetti);
+
+    // --- Tooltip on petal hover ---
     const petals = document.querySelectorAll('.petal');
     const tooltip = document.getElementById('tooltip');
-
     petals.forEach(petal => {
       petal.addEventListener('mousemove', (e) => {
         tooltip.textContent = petal.dataset.tip;
@@ -284,7 +341,7 @@
       });
     });
 
-    // Floating background petals
+    // --- Floating background petals ---
     function spawnPetal() {
       const fp = document.createElement('div');
       fp.className = 'floating-petal';
@@ -298,7 +355,6 @@
       document.body.appendChild(fp);
       setTimeout(() => fp.remove(), 10000);
     }
-
     setInterval(spawnPetal, 600);
   </script>
 
